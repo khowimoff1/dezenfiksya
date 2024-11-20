@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { CgDetailsMore } from "react-icons/cg";
 import { AiOutlineThunderbolt } from "react-icons/ai";
@@ -599,7 +598,7 @@ const App = () => {
         </div>
       </div>
       <div className="mt-12 mb-20 border-t-2 lg:mb-40 lg:mt-24">
-        <div className="flex flex-col gap-10 p-4 pt-20 lg:gap-32 lg:flex-row">
+        <div className="flex flex-col p-4 pt-20 lg:gap-32 lg:flex-row">
           <a href="/">
             <img
               src="https://www.dezinfeksiyatashkent.uz/assets/dez_logo2-5b433e48.png"
