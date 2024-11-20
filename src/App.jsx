@@ -490,7 +490,7 @@ const App = () => {
           <ul className="mt-4 space-y-10 w-[100%]">
             <li
               className={`border-b-2 transition-all duration-[600ms] ${
-                faq == 1 ? "lg:h-[220px] h-[260px]" : "overflow-y-hidden lg:h-[79px] h-[75px]"
+                faq == 1 ? "lg:h-[220px] h-[280px]" : "overflow-y-hidden lg:h-[79px] h-[75px]"
               }`}
             >
               <button
