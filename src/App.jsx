@@ -24,32 +24,42 @@ const App = () => {
   // faq
   const [faq, setFaq] = useState("1");
 
-  // send message
-  const SendMessage = (e) => {
+  // contact
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const validateInputs = () => {
+    if (!name.trim()) {
+      setError("Исмингизни киритинг.");
+      return false;
+    }
+    return true;
+  };
+  const SendMessage = async (e) => {
     e.preventDefault();
+    setSuccess(false);
+
+    if (!validateInputs()) return;
+
     const token = "7913792544:AAE2O9y-RBQ_qeBOciy9sX8_O11wcroB6Zw";
     const chat_id = 5235241793;
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-
     const message = `Ism: ${name}\nTelefon: ${phone}`;
 
-    axios({
-      url: url,
-      method: "POST",
-      data: {
+    try {
+      await axios.post(url, {
         chat_id: chat_id,
         text: message,
-      },
-    })
-      .then((res) => {
-        alert("Xabar yuborildi!");
-      })
-      .catch((error) => {
-        console.log("Xatolik yuz berdi", error);
       });
+      setSuccess(true);
+      setName("");
+      setPhone("");
+    } catch (error) {
+      setError("Хабар юборишда хатолик юз берди. Кейинроқ уриниб кўринг.");
+      console.error("Xatolik yuz berdi", error);
+    }
   };
 
   // AOS
@@ -159,7 +169,12 @@ const App = () => {
                   </li>
                 </ul>
                 <div className="w-full mt-10 text-center">
-                  <a href="#contact" onClick={()=>{setMenu(false)}}>
+                  <a
+                    href="#contact"
+                    onClick={() => {
+                      setMenu(false);
+                    }}
+                  >
                     <button className="z-10 text-lg font-medium bg-[rgb(37,33,251)] hover:bg-blue-500 text-white py-1 px-6 rounded-3xl">
                       {t("header.Богланиш")}
                     </button>
@@ -225,7 +240,9 @@ const App = () => {
             <h1 className="lg:text-[30px] text-xl font-bold lg:max-w-[340px] max-w-[190px] lg:mb-5 mb-3">
               {t("xaqida.Тезда")}
             </h1>
-            <p className="lg:w-[300px] text-[#676d83] lg:text-base text-xs">{t("xaqida.p1")}</p>
+            <p className="lg:w-[300px] text-[#676d83] lg:text-base text-xs">
+              {t("xaqida.p1")}
+            </p>
           </li>
           <li className="lg:w-[400px] lg:border-none border rounded-lg lg:py-0 py-2 lg:px-0 px-4">
             <GiAchievement className="lg:text-[80px] text-6xl text-[#1c4cf7] ml-2" />
@@ -286,13 +303,13 @@ const App = () => {
             data-aos="zoom-in"
             className="text-[#020c31] lg:text-[52px] text-[35px] font-bold mb-4 leading-[64px]"
           >
-            {t('xizmatlar.Хизматлар')}
+            {t("xizmatlar.Хизматлар")}
           </h1>
           <p
             data-aos="zoom-in"
             className="max-w-[335px] text-[#666] text-lg leading-6"
           >
-            {t('xizmatlar.p')}
+            {t("xizmatlar.p")}
           </p>
         </div>
         <ul className="w-full mt-10 space-y-10">
@@ -309,10 +326,10 @@ const App = () => {
             />
             <div className="max-w-[900px]">
               <h1 className="text-[#020c31] lg:text-[32px] text-[26px] font-bold mb-3">
-                {t('xizmatlar.Дезинфексия')}
+                {t("xizmatlar.Дезинфексия")}
               </h1>
               <p className="text-[#495157] lg:text-base text-sm font-base">
-                {t('xizmatlar.p1')}
+                {t("xizmatlar.p1")}
               </p>
             </div>
           </li>
@@ -329,10 +346,10 @@ const App = () => {
             />
             <div className="max-w-[900px]">
               <h1 className="text-[#020c31] lg:text-[32px] text-[26px] font-bold mb-3">
-                {t('xizmatlar.Дезинсексия')}
+                {t("xizmatlar.Дезинсексия")}
               </h1>
               <p className="text-[#495157] lg:text-base text-sm font-base">
-                {t('xizmatlar.p2')}
+                {t("xizmatlar.p2")}
               </p>
             </div>
           </li>
@@ -349,10 +366,10 @@ const App = () => {
             />
             <div className="max-w-[900px]">
               <h1 className="text-[#020c31] lg:text-[32px] text-[26px] font-bold mb-3">
-                {t('xizmatlar.Дератизатсия')}
+                {t("xizmatlar.Дератизатсия")}
               </h1>
               <p className="text-[#495157] lg:text-base text-sm font-base">
-                {t('xizmatlar.p3')}
+                {t("xizmatlar.p3")}
               </p>
             </div>
           </li>
@@ -363,7 +380,7 @@ const App = () => {
           data-aos="zoom-in"
           className="text-[#020c31] lg:text-[52px] text-[35px] font-bold mb-10 leading-[64px]"
         >
-          {t('xizmat.Хизмат')}
+          {t("xizmat.Хизмат")}
         </h1>
         <ul className="grid gap-5 lg:grid-cols-3">
           <li
@@ -371,14 +388,14 @@ const App = () => {
             className="rounded-xl bg-[#F3F6F6] p-5 relative"
           >
             <h1 className="text-[#020c31] lg:text-[32px] text-[25px] font-bold mb-5">
-              {t('КЛАПАЛАР')}
+              {t("КЛАПАЛАР")}
             </h1>
             <p className="text-[#495157] lg:text-lg text-[15px] font-semibold max-w-[410px] leading-5">
-              {t('xizmat.p1')}
+              {t("xizmat.p1")}
             </p>
             <a href="#contact" className="flex items-end justify-end mt-28">
               <button className="text-xl font-medium bg-[rgb(37,33,251)] hover:bg-blue-500 text-white py-3 px-10 rounded-3xl ">
-                {t('header.Богланиш')}
+                {t("header.Богланиш")}
               </button>
               <img
                 src="https://www.dezinfeksiyatashkent.uz/assets/klopi-6c1f42ef.jpg"
@@ -394,14 +411,14 @@ const App = () => {
             className="rounded-xl bg-[#F3F6F6] p-5 relative"
           >
             <h1 className="text-[#020c31] lg:text-[32px] text-[25px] font-bold mb-5">
-              {t('xizmat.ТАРАКАНЛАР')}
+              {t("xizmat.ТАРАКАНЛАР")}
             </h1>
             <p className="text-[#495157] lg:text-lg text-[15px] font-semibold max-w-[410px] leading-5">
-              {t('xizmat.p2')}
+              {t("xizmat.p2")}
             </p>
             <a href="#contact" className="flex items-end justify-end mt-28">
               <button className="text-xl font-medium bg-[rgb(37,33,251)] hover:bg-blue-500 text-white py-3 px-10 rounded-3xl ">
-                {t('header.Богланиш')}
+                {t("header.Богланиш")}
               </button>
               <img
                 src="https://www.dezinfeksiyatashkent.uz/assets/tarakan-d8b430bd.jpg"
@@ -416,13 +433,15 @@ const App = () => {
             data-aos="fade-right"
             className="rounded-xl bg-[#F3F6F6] p-5 relative"
           >
-            <h1 className="text-[#020c31] lg:text-[32px] text-[25px] font-bold mb-5">{t('xizmat.ЧАЁН')}</h1>
+            <h1 className="text-[#020c31] lg:text-[32px] text-[25px] font-bold mb-5">
+              {t("xizmat.ЧАЁН")}
+            </h1>
             <p className="text-[#495157] lg:text-lg text-[15px] font-semibold max-w-[410px] leading-5">
-              {t('xizmat.p3')}
+              {t("xizmat.p3")}
             </p>
             <a href="#contact" className="flex items-end justify-end mt-28">
               <button className="text-xl font-medium bg-[rgb(37,33,251)] hover:bg-blue-500 text-white py-3 px-10 rounded-3xl ">
-              {t('header.Богланиш')}
+                {t("header.Богланиш")}
               </button>
               <img
                 src="https://www.dezinfeksiyatashkent.uz/assets/skarpion-6902a7a9.jpg"
@@ -438,14 +457,14 @@ const App = () => {
             className="rounded-xl bg-[#F3F6F6] p-5 relative"
           >
             <h1 className="text-[#020c31] lg:text-[32px] text-[25px] font-bold mb-5">
-              {t('xizmat.КЕМИРУВЧИЛАР')}
+              {t("xizmat.КЕМИРУВЧИЛАР")}
             </h1>
             <p className="text-[#495157] lg:text-lg text-[15px] font-semibold max-w-[410px] leading-5">
-              {t('xizmat.p4')}
+              {t("xizmat.p4")}
             </p>
             <a href="#contact" className="flex items-end justify-end mt-28">
               <button className="text-xl font-medium bg-[rgb(37,33,251)] hover:bg-blue-500 text-white py-3 px-10 rounded-3xl ">
-              {t('header.Богланиш')}
+                {t("header.Богланиш")}
               </button>
               <img
                 src="https://www.dezinfeksiyatashkent.uz/assets/grizuni-de8c9315.jpg"
@@ -461,14 +480,14 @@ const App = () => {
             className="rounded-xl bg-[#F3F6F6] p-5 relative"
           >
             <h1 className="text-[#020c31] lg:text-[32px] text-[25px] font-bold mb-5">
-              {t('xizmat.БУРГАЛАР')}
+              {t("xizmat.БУРГАЛАР")}
             </h1>
             <p className="text-[#495157] lg:text-lg text-[15px] font-semibold max-w-[410px] leading-5">
-              {t('xizmat.p5')}
+              {t("xizmat.p5")}
             </p>
             <a href="#contact" className="flex items-end justify-end mt-28">
               <button className="text-xl font-medium bg-[rgb(37,33,251)] hover:bg-blue-500 text-white py-3 px-10 rounded-3xl ">
-              {t('header.Богланиш')}
+                {t("header.Богланиш")}
               </button>
               <img
                 src="https://www.dezinfeksiyatashkent.uz/assets/bloxi-7e06d020.jpg"
@@ -490,7 +509,9 @@ const App = () => {
           <ul className="mt-4 space-y-10 w-[100%]">
             <li
               className={`border-b-2 transition-all duration-[600ms] ${
-                faq == 1 ? "lg:h-[220px] h-[280px]" : "overflow-y-hidden lg:h-[79px] h-[75px]"
+                faq == 1
+                  ? "lg:h-[220px] h-[280px]"
+                  : "overflow-y-hidden lg:h-[79px] h-[75px]"
               }`}
             >
               <button
@@ -498,14 +519,16 @@ const App = () => {
                 onClick={() => setFaq(1)}
               >
                 <h1 className="text-[#676d83] lg:text-[30px] text-start text-[15px] font-semibold leading-8 ">
-                  {t('fak.Зараркунандаларни')}
+                  {t("fak.Зараркунандаларни")}
                 </h1>
                 <div className="w-[50px] h-[50px] bg-[#f2f2f2] rounded-full flex items-center justify-center px-2 mr-3">
                   <IoIosArrowDown className="text-[35px]" />
                 </div>
               </button>
-              <p className={`text-[#676d83] lg:text-2xl text-[15px] leading-8 pb-10 pr-3 `}>
-                {t('fak.p1')}
+              <p
+                className={`text-[#676d83] lg:text-2xl text-[15px] leading-8 pb-10 pr-3 `}
+              >
+                {t("fak.p1")}
               </p>
             </li>
             <li
@@ -517,8 +540,8 @@ const App = () => {
                 className="flex items-center justify-between w-full mb-5"
                 onClick={() => setFaq(2)}
               >
-                <h1 className="text-[#676d83] lg:text-[30px] text-[15px] font-semibold leading-8 ">
-                  {t('fak.Сиз')}
+                <h1 className="text-[#676d83] lg:text-[30px] text-start text-[15px] font-semibold leading-8 ">
+                  {t("fak.Сиз")}
                 </h1>
                 <div className="w-[50px] h-[50px] bg-[#f2f2f2] rounded-full flex items-center justify-center px-2 mr-3">
                   <IoIosArrowDown className="text-[35px]" />
@@ -529,12 +552,14 @@ const App = () => {
                   faq != 2 && "hidden"
                 } text-[#676d83] lg:text-2xl text-[15px] leading-8 pb-10 pr-3 `}
               >
-                {t('fak.p2')}
+                {t("fak.p2")}
               </p>
             </li>
             <li
               className={`border-b-2 transition-all duration-[600ms] ${
-                faq == 3 ? "lg:h-[220px] h-[260px]" : "overflow-y-hidden h-[80px]"
+                faq == 3
+                  ? "lg:h-[220px] h-[260px]"
+                  : "overflow-y-hidden h-[80px]"
               }`}
             >
               <button
@@ -542,7 +567,7 @@ const App = () => {
                 onClick={() => setFaq(3)}
               >
                 <h1 className="text-[#676d83] lg:text-[30px] text-[15px] font-semibold leading-8 text-start ">
-                  {t('fak.Менга')}
+                  {t("fak.Менга")}
                 </h1>
                 <div className="w-[50px] h-[50px] bg-[#f2f2f2] rounded-full flex items-center justify-center px-2 mr-3">
                   <IoIosArrowDown className="text-[35px]" />
@@ -553,7 +578,7 @@ const App = () => {
                   faq != 3 && "hidden"
                 } text-[#676d83] lg:text-2xl text-[15px] leading-8 pb-10 pr-3 `}
               >
-                {t('fak.p3')}
+                {t("fak.p3")}
               </p>
             </li>
           </ul>
@@ -567,26 +592,36 @@ const App = () => {
             className="bg-white lg:w-[456px] w-[90%] py-2 px-5 h-[385px] rounded-xl flex flex-col gap-10"
           >
             <h1 className="text-[#242825] lg:text-[35px] text-[28px] leading-[40px] font-bold">
-              {t('Малумотингизни')}
+              {t("Малумотингизни")}
             </h1>
-            <form onSubmit={SendMessage} className="flex flex-col gap-10">
+            <form onSubmit={SendMessage} className="flex flex-col gap-6">
+              {success && (
+                <div className="text-green-500">
+                  {t('xabar')}
+                </div>
+              )}
+
               <input
                 type="text"
                 id="name"
-                placeholder={t("Исмингиз")}
+                placeholder="Исмингиз"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 h-[50px] bg-[#F2F2F2] text-[#242825] rounded-lg text-base leading-6 font-medium"
               />
               <input
                 type="text"
                 id="phone"
                 placeholder="+998-90-123-45-67"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="w-full px-4 h-[50px] bg-[#F2F2F2] text-[#242825] rounded-lg text-base leading-6 font-medium"
               />
               <button
                 type="submit"
                 className="w-full px-4 h-[50px] bg-[#242825] text-white text-base font-medium rounded-lg"
               >
-                {t('Юбориш')}
+                Юбориш
               </button>
             </form>
           </div>
@@ -613,7 +648,7 @@ const App = () => {
                 <IoLocationOutline className="text-[20px]" />
               </span>
               <p className="text-[#242825cc] text-base font-medium">
-                {t('shahar')}
+                {t("shahar")}
               </p>
               <FiArrowUpRight className="text-xl" />
             </a>
