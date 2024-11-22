@@ -81,7 +81,7 @@ const App = () => {
             alt="logo"
             width={140}
             height={40}
-            className="w-[140px] h-[40px] lg:w-[300px] lg:h-[80px]"
+            className="w-[8.7rem] h-10 lg:w-[300px] lg:h-[80px]"
           />
         </a>
         <div className="flex items-center gap-5">
@@ -187,10 +187,10 @@ const App = () => {
       </div>
       {/* asosiy  */}
       <div className="relative items-center px-5 mt-24 lg:mt-32 lg:px-4 lg:py-4 lg:flex">
-        <div className="md:w-[50%] lg:py-0 lg:px-0 py-4 px-3">
+        <div className="md:w-[50%] lg:py-0 lg:px-0 py-4 px-3 overflow-hidden">
           <h1
             data-aos="fade-right"
-            className="lg:text-8xl text-5xl text-white lg:text-[#093fb3] font-medium lg:px-0"
+            className="lg:text-8xl text-5xl  text-white lg:text-[#093fb3] font-medium lg:px-0"
           >
             {t("asosiy.Дизинфексия")}
           </h1>
@@ -216,7 +216,7 @@ const App = () => {
             </button>
           </a>
         </div>
-        <div className="absolute top-0 -z-10 lg:static">
+        <div className="absolute top-0 w-[93%] h-full lg:w-auto lg:h-auto -z-10 lg:static">
           <img
             src="https://www.dezinfeksiyatashkent.uz/assets/hero-9df3d259.jpg"
             alt="img"
